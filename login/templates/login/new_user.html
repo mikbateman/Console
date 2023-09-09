@@ -18,11 +18,12 @@ Create User
     }
     h1 {
         color: white;
-        margin-top: 5px;
+        margin-top: 2px;
         font-size: 50px;
         text-decoration: underline;
     }
     input[type=text],input[type=password] {
+        color: white;
         border: none;
         border-bottom: 2px solid white;
         background: black;
@@ -41,37 +42,37 @@ Create User
         height: 30px;
         width:70px;
         margin-top: 20px;
-        margin-bottom: 20px;
     } 
     a {
-        margin-top: px;
         color: white;
     }
-
-
+    p {
+        color: white;
+    }
 </style>
 {% endblock %}
 
 {% block body %}
 <main>
     <div class="box">
-        <form>
+        <form action="{% url 'user' %}" method="post">
+            {% csrf_token %}
             <h1>Sign up</h1>
             <label>First Name: </label>
-            <input type="text" name="first_name" placeholder="John">
+            <input type="text" name="first_name" placeholder="John" required>
             <br>
             <label>Last Name: </label>
-            <input type="text" name="last_name" placeholder="Doe">
+            <input type="text" name="last_name" placeholder="Doe" required>
             <br>
             <label>Username: </label>
-            <input type="text" name="username" placeholder="johndoe">
+            <input type="text" name="username" placeholder="johndoe" required>
             <br>
             <label>Password: </label>
-            <input type="password" name="password" placeholder="***********">
+            <input type="password" name="passkey" placeholder="***********" required>
             <br>
             <input id="but" type="submit" value="Submit">
             <br>
-            <a href="{% url 'login' %}">Back</a>
+            <p>{{ message }}<a href="{% url 'login' %}">Back</a></p>
         </form>
     </div>
 </main>
