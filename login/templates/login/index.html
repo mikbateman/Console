@@ -6,14 +6,6 @@ login
 
 {% block style %}
     <style>
-        body {
-        }
-        .container {
-            height: 500px;
-            width: device-width;
-            display: flex;
-            justify-content: center;
-        }
         .box {
             border-radius: 25px;
             margin-top: 135px;
@@ -24,7 +16,6 @@ login
             border: 2px solid white;
         }
         input {
-            margin-left: 75px;
             margin-bottom: 10px;
             padding: 5px;
             border-radius: 10px;
@@ -36,12 +27,11 @@ login
             height: 30px;
             width:70px;
             margin-top: 20px;
-            margin-left: 156px;
+            margin-bottom: 20px;
         }
         h1 {
             color: white;
             margin-top: 10px;
-            margin-left: 85px;
             font-size: 50px;
             text-decoration: underline;
         }
@@ -55,7 +45,7 @@ login
     </style>
 {% endblock %}
 {% block body %}
-    <main class="container">
+    <main>
         <form class="box" action="{% url 'base' %}" method="post">
             {% csrf_token %}
             <h1>Welcome</h1>
@@ -66,7 +56,7 @@ login
             <br>
             <input id="but" type="submit" name="Login" value="Login">
             <p>{{ message }}</p>
-            <a href="#">Create User</a>
+            <a href="{% url 'user' %}">Create User</a>
         </form>
     </main>
 {% endblock %}

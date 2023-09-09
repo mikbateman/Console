@@ -20,5 +20,9 @@ def base(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
 
-    #else:
+    # else:
     #   return HttpResponceRedirct(reverse("home"))
+
+
+def new_user(request):
+    return render(request, "login/new_user.html")
