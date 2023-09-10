@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
 
 def index(request):
-    return render(request, "login/index.html")
+    if not request.user.is_authenticated:
+        return render(request, "login/index.html")
+    else:
+        return HttpResponseRedirect(reverse("home"))
 
 
 def base(request):
@@ -18,15 +21,16 @@ def base(request):
             return render(request, "login/index.html", {
                 "message": "Invalid Username or Password! Try again"
                 })
+        else:
+            login(request, user)
+            return HttpResponseRedirect(reverse("home"))
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
-
-    # else:
-    #   return HttpResponceRedirct(reverse("home"))
+    else:
+        return HttpResponseRedirect(reverse("home"))
 
 
 def new_user(request):
-    users = User.objects.all()
     if request.method == "POST":
         user_name = request.POST["username"]
         pass_word = request.POST["passkey"]
@@ -43,6 +47,14 @@ def new_user(request):
             user.save()
         except:
             return render(request, "login/new_user.html", {
-                "message": "Username is taken"
+                "message": "Username is taken! "
             })
-    return render(request, "login/new_user.html")
+    if not request.user.is_authenticated:
+        return render(request, "login/new_user.html")
+    else:
+        return HttpResponseRedirect(reverse("home"))
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("login"))
