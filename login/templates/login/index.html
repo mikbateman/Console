@@ -6,7 +6,7 @@ login
 
 {% block style %}
     <style>
-        .box {
+        form {
             border-radius: 25px;
             margin-top: 135px;
             height: 350px;
@@ -46,7 +46,7 @@ login
 {% endblock %}
 {% block body %}
     <main>
-        <form class="box" action="{% url 'base' %}" method="post">
+        <form action="{% url 'base' %}" method="post">
             {% csrf_token %}
             <h1>Welcome</h1>
             <br>

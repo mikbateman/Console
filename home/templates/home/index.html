@@ -1,135 +1,13 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script>
-            function addLoan() {
-                document.querySelector("#formLoan").innerHtml = "
-                    <label>> Loan Name: </label>
-                    <input type="text" name="name" placeholder="House Loan" required> 
-                    <br>
-                    <label>> Priciple Amount: </label>
-                    <input type="number" name="priciple" placeholder="100000" min="5000" max="100000000" required> 
-                    <br>
-                    <label>> Interest Rate: </label>
-                    <input type="number" name="interest" placeholder="11.59" step="0.1" min="5" max="30" required> 
-                    <br>
-                    <label>> Tenure (In no of Months): </label>
-                    <input type="number" name="tenure" placeholder="24" min="6" max="500"required> 
-                    <br>
-                    <label>> Monthly EMI: </label>
-                    <input type="number" name="emi" placeholder="2000" min="100" max="1000000" required> 
-                    <br>
-                    <label>> Starting Month / Year: </label>
-                    <input type="month" name="start" required> 
-                    <br>
-                    <label>> Ending Month / Year: </label>
-                    <input type="month" name="end" required> 
-                    <br>
-                    <input type="submit" name="submit" value="Submit" required>
-                    "
-            document.addEventListener("DOMContentLoaded", () => {
-                document.querySelector("#loan").onclick = addLoan;
-                document.querySelector("#expenses").onclick = addExpenses;
-                document.querySelector("#investments").onclick = addInvestments;
-            })
-        </script>
-        <style>
-            body {
-                font-family: Arial, Helvetica, sans-serif;
-                background-color: black;
-                color: white;
-            }
-            h1 {
-                text-decoration: underline;
-            }
-            h2 {
-                display: inline-block;
-                padding: 5px;
-                margin: 5px;
-            }
-            nav {
-                background-color: ;
-                color: white;
-                margin: 2px;
-                height: 50px;
-                border: 2px solid white;
-            }
-            a {
-                color: white;
-            }
-            button {
-                margin: 5px;
-                padding: 5px;
-                width: 90px;
-                height: 40px;
-                background-color: black;
-                color: #ffff66;
-                border: 2px solid yellow;
-                border-radius: 9px;
-                font-size: 20px;
-            }
-            div {
-                background-color: #1a1a1a;
-                margin: 2px;
-                border: solid 3px #808080;
-                border-radius: 10px;
-                padding: 10px;
-                color: yellow;
-            }
-            .loan {
-                width: 500px;
-                height: 380px;
-            }
-            .expenses {
-                height: 520px;
-                width: 600px;
-            }
-            .investments {
-                height: 230px;
-                width: 600px;
-            }
-            label {
-                padding: 5px;
-                margin: 5px;
-                font-size: 18px;
-                display: inline-block;
-                float: left;
-                clear: left;
-                width: 250px;
-                text-align: right;
-            }
-            input[type=text], input[type=month], input[type=number] {
-                padding: 5px;
-                display: inline-block;
-                float: left;
-                margin: 5px;
-                margin-bottom: 15px;
-                border: none;
-                border-bottom: solid 2px yellow;
-                background-color: #1a1a1a;
-                color: yellow;
-                color-scheme: dark;
-                width: 150px;
-            }
-            input[type=submit]{
-                background-color: #1a1a1a;
-                margin-left: 200px;
-                margin-top: 10px;
-                color: yellow;
-                height: 30px;
-                width: 80px;
-                float: left;
-                border: solid 2px yellow;
-                border-radius: 5px;
-            }
-            ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-                color: yellow;
-                opacity: 0.7; /* Firefox */
-            }
-        </style>
+        <link rel="stylesheet" href="{% static 'home/styles.css' %}">
+        <script src={% static 'home/script.js' %}></script>
     </head>
     <body>
         <nav>
@@ -142,89 +20,23 @@
             <div class="loan">
                 <form id="formLoan" action="" method="post">
                     {% csrf_token %}
-                    <label>> Loan Name: </label>
-                    <input type="text" name="name" placeholder="House Loan" required> 
-                    <br>
-                    <label>> Priciple Amount: </label>
-                    <input type="number" name="priciple" placeholder="100000" min="5000" max="100000000" required> 
-                    <br>
-                    <label>> Interest Rate: </label>
-                    <input type="number" name="interest" placeholder="11.59" step="0.1" min="5" max="30" required> 
-                    <br>
-                    <label>> Tenure (In no of Months): </label>
-                    <input type="number" name="tenure" placeholder="24" min="6" max="500"required> 
-                    <br>
-                    <label>> Monthly EMI: </label>
-                    <input type="number" name="emi" placeholder="2000" min="100" max="1000000" required> 
-                    <br>
-                    <label>> Starting Month / Year: </label>
-                    <input type="month" name="start" required> 
-                    <br>
-                    <label>> Ending Month / Year: </label>
-                    <input type="month" name="end" required> 
-                    <br>
-                    <input type="submit" name="submit" value="Submit" required>
                 </form>
             </div>
-            <button id="loan"><strong>Add+</strong></button>
+            <button id="bl" onclick="addLoan()"><strong>Add+</strong></button>
             <h1>Expenses</h1>
             <div class="expenses">
-                <form>
+                <form id="formExpenses">
                     {% csrf_token %}
-                    <label>> Year:</label>
-                    <input type="number" name="year" min="1980" max="2200"required>
-                    <br>
-                    <label>> Month:</label>
-                    <input type="month" name="month" required>
-                    <br>
-                    <label>> Income:</label>
-                    <input type="number" name="income" min="100" max="1000000" required>
-                    <br>
-                    <label>> Utilities:</label>
-                    <input type="number" name="utilities" min="100" max="1000000" required>
-                    <br>
-                    <label>> Food:</label>
-                    <input type="number" name="food" min="100" max="1000000" required>
-                    <br>
-                    <label>> Entertainment:</label>
-                    <input type="number" name="entertainment" min="100" max="1000000" required>
-                    <br>
-                    <label>> Groceries:</label>
-                    <input type="number" name="groceries" min="100" max="1000000" required>
-                    <br>
-                    <label>> Subscriptions:</label>
-                    <input type="number" name="subscriptions" min="100" max="1000000" required>
-                    <br>
-                    <label>> EMIs:</label>
-                    <input type="number" name="emi" min="100" max="1000000" required>
-                    <br>
-                    <label>> Other:</label>
-                    <input type="number" name="other" min="100" max="1000000" required>
-                    <br>
-                    <input type="submit" name="submit" value="Submit">
                 </form>
             </div>
-            <button id="expenses"><strong>Add+</strong></button>
+            <button id="be" onclick="addExpenses()"><strong>Add+</strong></button>
             <h1>Investments</h1>
             <div class="investments">
-                {% csrf_token %}
-                <form>
-                    <label>> Stocks:</label>
-                    <input type="number" name="stocks" min="100" max="1000000" required>
-                    <br>
-                    <label>> Mutual Funds:</label>
-                    <input type="number" name="mf" min="100" max="1000000" required>
-                    <br>
-                    <label>> Gold:</label>
-                    <input type="number" name="gold" min="100" max="1000000" required>
-                    <br>
-                    <label>> Other:</label>
-                    <input type="number" name="other" min="100" max="1000000" required>
-                    <br>
-                    <input type="submit" name="submit" value="Submit">
+                <form id="formInvestments">
+                    {% csrf_token %}
                 </form>
             </div>
-            <button id="investments"><strong>Add+</strong></button>
+            <button id="bi" onclick="addInvestements()"><strong>Add+</strong></button>
         </main>
     </body>
 </html>

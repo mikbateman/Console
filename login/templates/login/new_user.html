@@ -6,7 +6,7 @@ Create User
 
 {% block style %}
 <style>
-    .box {
+    form {
         border-radius: 25px;
         color: white;
         margin-top: 135px;
@@ -54,7 +54,7 @@ Create User
 
 {% block body %}
 <main>
-    <div class="box">
+    <div>
         <form action="{% url 'user' %}" method="post">
             {% csrf_token %}
             <h1>Sign up</h1>
