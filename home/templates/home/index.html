@@ -148,5 +148,37 @@ function addInvestements() {
 
     }
 }
+
+function report() {
+    myStyles = `
+    background-color: #1a1a1a;
+    margin: 2px;
+    border: solid 3px #808080;
+    border-radius: 10px;
+    padding: 10px;
+    color: yellow;
+    height: 140px;
+    width: 580px;
+    `;
+    if (document.querySelector("#final").innerHTML === "Print Report") {
+        document.querySelector("#final").innerHTML = "Close";
+    document.querySelector(".final").style.cssText = myStyles;
+    document.querySelector(".final").innerHTML = `
+        <label>> Year:</label>
+        <input type="number" name="year" min="2000" max="2100" required>
+        <br>
+        <label>> Month:</label>
+        <input type="number" name="month" min="1" max="12" required>
+        <br>
+        <input type="submit" name="submit" value="Get Report">
+        `
+    }
+    else {
+        document.querySelector("#final").innerHTML = "Print Report";
+        document.querySelector(".final").style.cssText = ``;
+        document.querySelector(".final").innerHTML = ``;
+
+    }
+}
 </script>
 {% endblock %}
