@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Loans(models.Model):
+class Loan(models.Model):
     user = models.CharField(max_length=12)
     name = models.CharField(max_length=20)
     principle = models.DecimalField(max_digits=10, decimal_places=2)
@@ -12,7 +12,7 @@ class Loans(models.Model):
     end = models.DateField()
 
 
-class Expenses(models.Model):
+class Expense(models.Model):
     user = models.CharField(max_length=12)
     year = models.IntegerField()
     month = models.IntegerField()
@@ -23,14 +23,15 @@ class Expenses(models.Model):
     groceries = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     subscriptions = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     emis = models.DecimalField(max_digits=8, decimal_places=2, default=0)
-    other = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+    something = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     balance = models.DecimalField(max_digits=10, decimal_places=2)
 
 
-class Investments(models.Model):
+class Investment(models.Model):
     user = models.CharField(max_length=12)
+    year = models.IntegerField()
+    month = models.IntegerField()
     stocks = models.DecimalField(max_digits=12, decimal_places=2)
     mf = models.DecimalField(max_digits=12, decimal_places=2)
     gold = models.DecimalField(max_digits=12, decimal_places=2)
-    savings = models.DecimalField(max_digits=12, decimal_places=2)
     assets = models.DecimalField(max_digits=12, decimal_places=2)

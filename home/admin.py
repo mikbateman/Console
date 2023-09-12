@@ -1,3 +1,7 @@
 from django.contrib import admin
+from . models import Loan, Expense, Investment
 
-# Register your models here.
+
+admin.site.register(Loan)
+admin.site.register(Expense)
+admin.site.register(Investment)

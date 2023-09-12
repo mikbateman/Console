@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'home/styles.css' %}">
+        {% block script %}
+        {% endblock %}
+    </head>
+    <body>
+        <nav>
+            <h2>Hello! {{ request.user.first_name }}</h2>
+            <h2 style="margin-left: 510px; color: yellow;">Build Your Report</h2>
+            <h2 style="margin-left: 480px;"><a href="{% url 'logout' %}">Log Out</a></h2>
+        </nav>
+        <main>
+            <h1>Loans</h1>
+            <div class="loan">
+                <form id="formLoan" action="{% url 'loan' %}" method="post">
+                    {% csrf_token %}
+                </form>
+            </div>
+            <button id="bl" onclick="addLoan()"><strong>Add+</strong></button>
+            <h1>Expenses</h1>
+            <div class="expenses">
+                <form id="formExpenses" action="{% url 'expenses' %}" method="post">
+                    {% csrf_token %}
+                </form>
+            </div>
+            <button id="be" onclick="addExpenses()"><strong>Add+</strong></button>
+            <h1>Investments</h1>
+            <div class="investments">
+                <form id="formInvestments" action="{% url 'investments' %}" method="post">
+                    {% csrf_token %}
+                </form>
+            </div>
+            <button id="bi" onclick="addInvestements()"><strong>Add+</strong></button>
+        </main>
+    </body>
+</html>
