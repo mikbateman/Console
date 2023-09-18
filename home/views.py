@@ -75,18 +75,24 @@ def report(request):
                 loan_paid += paid * i.emi
         else:
             print("No Loans")
+
         if exp.exists():
             exp = exp[0]
             expenses = exp.utilities + exp.food + exp.entertainment + exp.something + exp.emis + exp.groceries + exp.subscriptions
             balance = exp.balance
         else:
             print("Not enough Data")
-        l = simple("Loans", loan_paid, loan_total - loan_paid)
+
+        loan_pie = simple("Loans", loan_paid, loan_total - loan_paid)
+        exp_pie = simple("Expenditure", balance, expenses)
+
         if len(str(month)) == 1:
-            name = str(year) + "0" + str(month)
+            exp_name = str(year) + "0" + str(month)
         else:
-            name = str(year) + str(month)
-        l.savefig(f"data/loans/{user}", dpi=300)
+            exp_name = str(year) + str(month)
+
+        loan_pie.savefig(f"data/loans/{user}", dpi=300)
+        exp_pie.savefig(f"data/exp/{user}_{exp_name}", dpi=300)
         # simple("Expenditure", balance, expenses)
         # cat(exp.utilities, exp.food, exp.entertainment, exp.groceries, exp.subscriptions, exp.emis, exp.something)
         return HttpResponseRedirect(reverse("home"))
