@@ -43,6 +43,9 @@
             <br>
             <button id="final" onclick="report()">Print Report</button>
             <div class="final">
+                <form id="report" action="{% url 'report' %}" method="post">
+                    {% csrf_token %}
+                </form>
             </div>
         </main>
     </body>

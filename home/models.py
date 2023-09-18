@@ -4,12 +4,9 @@ from django.db import models
 class Loan(models.Model):
     user = models.CharField(max_length=12)
     name = models.CharField(max_length=20)
-    principle = models.DecimalField(max_digits=10, decimal_places=2)
-    interest = models.DecimalField(max_digits=4, decimal_places=2)
     tenure = models.IntegerField()
     emi = models.DecimalField(max_digits=8, decimal_places=2)
     start = models.DateField()
-    end = models.DateField()
 
 
 class Expense(models.Model):

@@ -163,7 +163,7 @@ function report() {
     if (document.querySelector("#final").innerHTML === "Print Report") {
         document.querySelector("#final").innerHTML = "Close";
     document.querySelector(".final").style.cssText = myStyles;
-    document.querySelector(".final").innerHTML = `
+    document.querySelector("#report").innerHTML += `
         <label>> Year:</label>
         <input type="number" name="year" min="2000" max="2100" required>
         <br>
@@ -176,7 +176,7 @@ function report() {
     else {
         document.querySelector("#final").innerHTML = "Print Report";
         document.querySelector(".final").style.cssText = ``;
-        document.querySelector(".final").innerHTML = ``;
+        document.querySelector(".final").innerHTML = `{% csrf_token %}`;
 
     }
 }
