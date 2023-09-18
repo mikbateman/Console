@@ -85,6 +85,7 @@ def report(request):
 
         loan_pie = simple("Loans", loan_paid, loan_total - loan_paid)
         exp_pie = simple("Expenditure", balance, expenses)
+        cat_pie = cat(exp.utilities, exp.food, exp.entertainment, exp.groceries, exp.subscriptions, exp.emis, exp.something)
 
         if len(str(month)) == 1:
             exp_name = str(year) + "0" + str(month)
@@ -93,6 +94,6 @@ def report(request):
 
         loan_pie.savefig(f"data/loans/{user}", dpi=300)
         exp_pie.savefig(f"data/exp/{user}_{exp_name}", dpi=300)
-        # simple("Expenditure", balance, expenses)
-        # cat(exp.utilities, exp.food, exp.entertainment, exp.groceries, exp.subscriptions, exp.emis, exp.something)
+        cat_pie.savefig(f"data/category/{user}_{exp_name}", dpi=300)
+
         return HttpResponseRedirect(reverse("home"))

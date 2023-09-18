@@ -57,4 +57,4 @@ def cat(c1, c2, c3, c4, c5, c6, c7):
         kw["arrowprops"].update({"connectionstyle": connectionstyle})
         ax.annotate(labels[i], xy=(x, y), xytext=(1.35*np.sign(x), 1.4*y), horizontalalignment=horizontalalignment, **kw)
 
-    plt.save()
+    return plt
