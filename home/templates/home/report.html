@@ -30,19 +30,67 @@
         }
         img {
         }
+        table {
+            margin: 10px;
+            width: 400px;
+            height: 350px;
+            border: 2px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            border : 2px solid black;
+            padding: 2px;
+        }
+        td {
+            text-align: center;
+        }
     </style>
     <body>
         <div class="a4">  
             <h1>{{ month }}</h1>
-            <div style="width: 55%; height: 550px; float:left;">  
+            <div class="left" style="width: 55%; height: 550px; float:left;">  
                 <h2>Loans</h2>
                 {% for i in loan %}
                 <p>{{ i }}</p> 
                 {% endfor %}
                 <h2>Expenditure</h2>
+                <table>
+                    <tr>
+                        <th>Utilitites</th>
+                        <td>{{ exp.utilities }}</td>
+                    </tr>
+                    <tr>
+                        <th>Food</th>
+                        <td>{{ exp.food }}</td>
+                    </tr>
+                    <tr>
+                        <th>Entertainment</th>
+                        <td>{{ exp.entertainment }}</td>
+                    </tr>
+                    <tr>
+                        <th>Groceries</th>
+                        <td>{{ exp.groceries }}</td>
+                    </tr>
+                    <tr>
+                        <th>Subscriptions</th>
+                        <td>{{ exp.subscriptions }}</td>
+                    </tr>
+                    <tr>
+                        <th>EMIs</th>
+                        <td>{{ exp.emis }}</td>
+                    </tr>
+                    <tr>
+                        <th>Other</th>
+                        <td>{{ exp.something }}</td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <td>{{ total }}</td>
+                    </tr>
+                </table>
             </div>  
 
-            <div style="width:45%; height: 550px; float:left;">  
+            <div class="right" style="width:45%; height: 550px; float:left;">  
                 <img src="{% static 'data/loans/admin.png' %}" height="280" widht="280">
                 <img src="{% static 'data/exp/admin_202308.png' %}" height="280" widht="280">
                 <img src="{% static 'data/category/admin_202308.png' %}" height="280" widht="280" style="margin-top:25px">

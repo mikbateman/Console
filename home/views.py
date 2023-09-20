@@ -93,8 +93,6 @@ def report(request):
         if exp.exists():
             exp = exp[0]
             expenses = exp.utilities + exp.food + exp.entertainment + exp.something + exp.emis + exp.groceries + exp.subscriptions
-            ex = [exp.utilities , exp.food , exp.entertainment , exp.something , exp.emis , exp.groceries , exp.subscriptions]
-
             balance = exp.balance
             exp_pie = simple("Expenditure", balance, expenses)
             exp_pie.savefig(f"home/static/data/exp/{user}_{exp_name}", dpi=300)
@@ -120,5 +118,6 @@ def report(request):
         return render(request, "home/report.html", {
             "month": f"{months[month]}-{year}",
             "loan": loan_msg,
-            "exp": ex,
+            "exp": exp,
+            "total": expenses,
             })
