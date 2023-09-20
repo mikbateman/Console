@@ -62,38 +62,63 @@ def report(request):
         user = request.user.username
         year = int(request.POST["year"])
         month = int(request.POST["month"])
+
         loan_total = 0
         loan_paid = 0
+
         loans = Loan.objects.filter(user=user)
         exp = Expense.objects.filter(user=user, month=month, year=year)
+
         curr = str(datetime.now().date()).split("-")
-        if loans.exists():
-            for i in loans:
-                loan_total += i.tenure * i.emi
-                start = str(i.start).split("-")
-                paid = (int(curr[0]) - int(start[0])) * 12 + int(curr[1]) - int(start[1])
-                loan_paid += paid * i.emi
-        else:
-            print("No Loans")
-
-        if exp.exists():
-            exp = exp[0]
-            expenses = exp.utilities + exp.food + exp.entertainment + exp.something + exp.emis + exp.groceries + exp.subscriptions
-            balance = exp.balance
-        else:
-            print("Not enough Data")
-
-        loan_pie = simple("Loans", loan_paid, loan_total - loan_paid)
-        exp_pie = simple("Expenditure", balance, expenses)
-        cat_pie = cat(exp.utilities, exp.food, exp.entertainment, exp.groceries, exp.subscriptions, exp.emis, exp.something)
 
         if len(str(month)) == 1:
             exp_name = str(year) + "0" + str(month)
         else:
             exp_name = str(year) + str(month)
 
-        loan_pie.savefig(f"data/loans/{user}", dpi=300)
-        exp_pie.savefig(f"data/exp/{user}_{exp_name}", dpi=300)
-        cat_pie.savefig(f"data/category/{user}_{exp_name}", dpi=300)
+        if loans.exists():
+            loan_msg = []
+            for i in loans:
+                tmp = i.tenure * i.emi
+                loan_total += tmp
+                start = str(i.start).split("-")
+                paid = (int(curr[0]) - int(start[0])) * 12 + int(curr[1]) - int(start[1])
+                loan_paid += paid * i.emi
+                loan_msg.append(f"{i.name} : {tmp}")
+            loan_pie = simple("Loans", loan_paid, loan_total - loan_paid)
+            loan_pie.savefig(f"home/static/data/loans/{user}", dpi=300)
+        else:
+            loan_msg = "You don't have any loans"
 
-        return HttpResponseRedirect(reverse("home"))
+        if exp.exists():
+            exp = exp[0]
+            expenses = exp.utilities + exp.food + exp.entertainment + exp.something + exp.emis + exp.groceries + exp.subscriptions
+            ex = [exp.utilities , exp.food , exp.entertainment , exp.something , exp.emis , exp.groceries , exp.subscriptions]
+
+            balance = exp.balance
+            exp_pie = simple("Expenditure", balance, expenses)
+            exp_pie.savefig(f"home/static/data/exp/{user}_{exp_name}", dpi=300)
+            cat_pie = cat(exp.utilities, exp.food, exp.entertainment, exp.groceries, exp.subscriptions, exp.emis, exp.something)
+            cat_pie.savefig(f"home/static/data/category/{user}_{exp_name}", dpi=300)
+        else:
+            exp_msg = "Not enough data to obtain report"
+
+        months = {
+                1: "January",
+                2: "February",
+                3: "March",
+                4: "April",
+                5: "May",
+                6: "June",
+                7: "July",
+                8: "August",
+                9: "September",
+                10: "October",
+                11: "November",
+                12: "December"
+                }
+        return render(request, "home/report.html", {
+            "month": f"{months[month]}-{year}",
+            "loan": loan_msg,
+            "exp": ex,
+            })

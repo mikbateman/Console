@@ -7,10 +7,15 @@ matplotlib.use('Agg')
 
 
 def simple(title, l1, l2):
-    labels = ["Paid", "Remaining"] if title == "Loans" else ["Balance", "Expenses"]
+    if title == "Loans":
+        labels = ["Paid", "Remaining"]
+        outer_colors = ["#7fec61", "#fb4444"]
+    else:
+        labels = ["Balance", "Expenses"]
+        outer_colors = ["#ffa64d", "#80ffff"]
+
     sizes = [l1, l2]
 
-    outer_colors = ["#7fec61", "#fb4444"]
     fig, ax = plt.subplots()
     ax.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140, colors=outer_colors, pctdistance=0.85)
 

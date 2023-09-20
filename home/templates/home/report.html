@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,16 +7,47 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <style>
-        div {
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #eee7e7;
+        }
+        .a4 {
+            background-color: white;
             width: 21cm;
             height: 29.7cm;
         }
+        h1 {
+            padding: 5px;
+            text-decoration: underline;
+        }
+        h2, p {
+            text-align: left;
+            margin: 10px;
+            padding: 5px;
+        }
+        h2 {
+            text-decoration: underline;
+        }
+        img {
+        }
     </style>
     <body>
-        <center>
-            <div>
-                <h1>{{ month }}August</h1>  
-            </div>
-        </center>
+        <div class="a4">  
+            <h1>{{ month }}</h1>
+            <div style="width: 55%; height: 550px; float:left;">  
+                <h2>Loans</h2>
+                {% for i in loan %}
+                <p>{{ i }}</p> 
+                {% endfor %}
+                <h2>Expenditure</h2>
+            </div>  
+
+            <div style="width:45%; height: 550px; float:left;">  
+                <img src="{% static 'data/loans/admin.png' %}" height="280" widht="280">
+                <img src="{% static 'data/exp/admin_202308.png' %}" height="280" widht="280">
+                <img src="{% static 'data/category/admin_202308.png' %}" height="280" widht="280" style="margin-top:25px">
+            </div>  
+        </div>  
+
     </body>
 </html>
