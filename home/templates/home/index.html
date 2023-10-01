@@ -56,7 +56,7 @@ function addExpenses() {
     border-radius: 10px;
     padding: 10px;
     color: yellow;
-    height: 520px;
+    height: 680px;
     width: 600px;
     `;
     if (document.querySelector("#be").innerHTML === "<strong>Add+</strong>") {
@@ -78,6 +78,12 @@ function addExpenses() {
             <label>> Food:</label>
             <input type="number" name="food" min="100" max="1000000" required>
             <br>
+            <label>> Shoping:</label>
+            <input type="number" name="shoping" min="100" max="1000000" required>
+            <br>
+            <label>> Fuel:</label>
+            <input type="number" name="fuel" min="100" max="1000000" required>
+            <br>
             <label>> Entertainment:</label>
             <input type="number" name="entertainment" min="100" max="1000000" required>
             <br>
@@ -92,6 +98,9 @@ function addExpenses() {
             <br>
             <label>> Other:</label>
             <input type="number" name="unknown" min="100" max="1000000" required>
+            <br>
+            <label>> Any Message:</label>
+            <input type="text" name="msg" default="0">
             <br>
             <input type="submit" name="submit" value="Submit">
             `

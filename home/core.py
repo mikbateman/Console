@@ -33,9 +33,9 @@ def simple(title, l1, l2):
     return plt
 
 
-def cat(c1, c2, c3, c4, c5, c6, c7):
-    labels = ["utilities", "food", "entertainment", "groceries", "subscription", "emi", "other"]
-    sizes = [c1, c2, c3, c4, c5, c6, c7]
+def cat(c1, c2, c3, c4, c5, c6, c7, c8):
+    labels = ["utilities", "food", "fuel", "shopping", "groceries", "subscription", "emi", "other"]
+    sizes = [c1, c2, c3, c4, c5, c6, c7, c8]
 
     fig, ax = plt.subplots()
     wedges, texts = ax.pie(sizes, wedgeprops=dict(width=0.5), startangle=-40)
@@ -61,5 +61,30 @@ def cat(c1, c2, c3, c4, c5, c6, c7):
         connectionstyle = f"angle,angleA=0,angleB={ang}"
         kw["arrowprops"].update({"connectionstyle": connectionstyle})
         ax.annotate(labels[i], xy=(x, y), xytext=(1.35*np.sign(x), 1.4*y), horizontalalignment=horizontalalignment, **kw)
+
+    return plt
+
+
+def bar(l1, l2):
+    cat = (
+        "Stocks",
+        "MF",
+        "Gold",
+        "Assets"
+    )
+    weight_counts = {
+        "previous": np.array(l2),
+        "new investments": np.array(l1),
+    }
+    width = 0.4
+
+    fig, ax = plt.subplots()
+    bottom = np.zeros(4)
+
+    for boolean, weight_count in weight_counts.items():
+        p = ax.bar(cat, weight_count, width, label=boolean, bottom=bottom)
+        bottom += weight_count
+
+    ax.legend(loc="upper right")
 
     return plt

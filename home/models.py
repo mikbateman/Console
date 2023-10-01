@@ -16,8 +16,9 @@ class Expense(models.Model):
     income = models.DecimalField(max_digits=10, decimal_places=2)
     utilities = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     food = models.DecimalField(max_digits=8, decimal_places=2, default=0)
-    entertainment = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     groceries = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+    shoping = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    fuel = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     subscriptions = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     emis = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     something = models.DecimalField(max_digits=8, decimal_places=2, default=0)
@@ -26,8 +27,7 @@ class Expense(models.Model):
 
 class Investment(models.Model):
     user = models.CharField(max_length=12)
-    year = models.IntegerField()
-    month = models.IntegerField()
+    yyyymm = models.IntegerField()
     stocks = models.DecimalField(max_digits=12, decimal_places=2)
     mf = models.DecimalField(max_digits=12, decimal_places=2)
     gold = models.DecimalField(max_digits=12, decimal_places=2)
