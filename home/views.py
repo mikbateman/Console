@@ -24,7 +24,7 @@ def loan(request):
         l.save()
     return HttpResponseRedirect(reverse("home"))
 
-d = ["0", 0, 0, 0, 0]
+d = [0, 0, 0, 0]
 
 def expense(request):
     if request.method == "POST":
@@ -40,9 +40,13 @@ def expense(request):
         subscriptions = int(request.POST["subscriptions"])
         emi = int(request.POST["emi"])
         unknown = int(request.POST["unknown"])
-        d[0] = str(request.POST["msg"])
+        if len(str(month)) == 1:
+            yyyymm = int(str(year) + "0" + str(month))
+        else:
+            yyyymm = int(str(year) + str(month))
+        msg = str(request.POST["msg"])
         balance = income - utilities - food - groceries - subscriptions - emi - unknown - shoping - fuel
-        e = Expense(user = user, year = year, month = month, income = income, utilities = utilities, food = food, groceries = groceries, subscriptions = subscriptions, emis = emi, something = unknown, shoping = shoping, fuel = fuel, balance = balance)
+        e = Expense(user = user, yyyymm = yyyymm, income = income, utilities = utilities, food = food, groceries = groceries, subscriptions = subscriptions, emis = emi, something = unknown, shoping = shoping, fuel = fuel, balance = balance, msg = msg)
         e.save()
     return HttpResponseRedirect(reverse("home"))
 
@@ -57,9 +61,9 @@ def investment(request):
         gold = int(request.POST["gold"])
         assets = int(request.POST["assets"])
         if len(str(month)) == 1:
-            yyyymm = str(year) + "0" + str(month)
+            yyyymm = int(str(year) + "0" + str(month))
         else:
-            yyyymm = str(year) + str(month)
+            yyyymm = int(str(year) + str(month))
         i = Investment(user = user, yyyymm = yyyymm, stocks = stocks, mf = mf, gold = gold, assets = assets)
         i.save()
     return HttpResponseRedirect(reverse("home"))
@@ -68,7 +72,6 @@ def investment(request):
 def report(request):
     if request.method == "POST":
         user = request.user.username
-        d[1] = user
         year = int(request.POST["year"])
         month = int(request.POST["month"])
 
@@ -81,15 +84,10 @@ def report(request):
             yyyymm = str(year) + str(month)
 
         loans = Loan.objects.filter(user=user)
-        exp = Expense.objects.filter(user=user, month=month, year=year)
+        exp = Expense.objects.filter(user=user, yyyymm=int(yyyymm))
         inv = Investment.objects.filter(user=user, yyyymm=int(yyyymm))
 
         curr = str(datetime.now().date()).split("-")
-
-        if len(str(month)) == 1:
-            exp_name = str(year) + "0" + str(month)
-        else:
-            exp_name = str(year) + str(month)
 
         if loans.exists():
             loan_msg = []
@@ -102,7 +100,7 @@ def report(request):
                 loan_msg.append(f"{i.name} : {tmp}")
             loan_pie = simple("Loans", loan_paid, loan_total - loan_paid)
             loan_pie.savefig(f"home/static/data/loans/{user}", dpi=300)
-            d[1] = f"/static/data/loans/{user}.png"
+            d[0] = f"/static/data/loans/{user}.png"
         else:
             loan_msg = 0
 
@@ -111,13 +109,17 @@ def report(request):
             expenses = exp.utilities + exp.food + exp.something + exp.emis + exp.groceries + exp.subscriptions + exp.fuel + exp.shoping
             balance = exp.balance
             exp_pie = simple("Expenditure", balance, expenses)
-            exp_pie.savefig(f"home/static/data/exp/{user}_{exp_name}", dpi=300)
-            d[2] = f"/static/data/exp/{user}_{exp_name}.png"
+            exp_pie.savefig(f"home/static/data/exp/{user}_{yyyymm}", dpi=300)
+            d[1] = f"/static/data/exp/{user}_{yyyymm}.png"
             cat_pie = cat(exp.utilities, exp.food, exp.fuel, exp.shoping, exp.groceries, exp.subscriptions, exp.emis, exp.something)
-            cat_pie.savefig(f"home/static/data/category/{user}_{exp_name}", dpi=300)
-            d[3] = f"/static/data/category/{user}_{exp_name}.png"
+            cat_pie.gcf().set_size_inches(10, 7)
+            cat_pie.savefig(f"home/static/data/category/{user}_{yyyymm}", dpi=500)
+            d[2] = f"/static/data/category/{user}_{yyyymm}.png"
         else:
             exp = 0
+
+        prev_balance = Expense.objects.filter(yyyymm__lte = exp.yyyymm).aggregate(balance = Sum("balance"))
+        prev_balance = int(prev_balance["balance"])
 
         if inv.exists():
             inv = inv[0]
@@ -125,15 +127,15 @@ def report(request):
             l1 = [int(inv.stocks), int(inv.mf), int(inv.gold), int(inv.assets)]
             l2 = [int(tmp["stocks"]), int(tmp["mf"]), int(tmp["gold"]), int(tmp["assets"])]
             inv_bar = bar(l1, l2)
-            inv_bar.savefig(f"home/static/data/inv/{user}_{exp_name}", dpi=300)
+            inv_bar.savefig(f"home/static/data/inv/{user}_{yyyymm}", dpi=300)
         else:
-            tmp = Investment.objects.filter(yyyymm__lt = int(exp_name)).aggregate(stocks = Sum("stocks"), mf = Sum("mf"), gold = Sum("gold"), assets = Sum("assets"))
+            tmp = Investment.objects.filter(yyyymm__lt = int(yyyymm)).aggregate(stocks = Sum("stocks"), mf = Sum("mf"), gold = Sum("gold"), assets = Sum("assets"))
             l1 = [0, 0, 0, 0]
             l2 = [tmp["stocks"], tmp["mf"], tmp["gold"], tmp["assets"]]
             inv_bar = bar(l1, l2)
-            inv_bar.savefig(f"home/static/data/inv/{user}_{exp_name}", dpi=300)
+            inv_bar.savefig(f"home/static/data/inv/{user}_{yyyymm}", dpi=300)
 
-        d[4] = f"/static/data/inv/{user}_{exp_name}.png"
+        d[3] = f"/static/data/inv/{user}_{yyyymm}.png"
 
         months = {
                 1: "January",
@@ -153,10 +155,11 @@ def report(request):
             "month": f"{months[month]}-{year}",
             "loan": loan_msg,
             "exp": exp,
-            "msg": d[0],
-            "floan": d[1],
-            "fexp": d[2],
-            "fcat": d[3],
-            "finv": d[4],
-            "total": expenses
+            "msg": exp.msg,
+            "floan": d[0],
+            "fexp": d[1],
+            "fcat": d[2],
+            "finv": d[3],
+            "total": expenses,
+            "balance": prev_balance
             })

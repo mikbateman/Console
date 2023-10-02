@@ -11,7 +11,7 @@
     padding: 10px;
     color: yellow;
     width: 500px;
-    height: 380px;
+    height: 250px;
     `;
     if (document.querySelector("#bl").innerHTML === "<strong>Add+</strong>") {
         document.querySelector("#bl").innerHTML = "<strong>Close</strong>";
@@ -19,12 +19,6 @@
         document.querySelector("#formLoan").innerHTML += `
             <label>> loan name: </label>
             <input type="text" name="name" placeholder="house loan" required> 
-            <br>
-            <label>> principle amount: </label>
-            <input type="number" name="principle" placeholder="100000" min="5000" max="100000000" required> 
-            <br>
-            <label>> interest rate: </label>
-            <input type="number" name="interest" placeholder="11.59" step="0.1" min="5" max="30" required> 
             <br>
             <label>> tenure (in no of months): </label>
             <input type="number" name="tenure" placeholder="24" min="6" max="500"required> 
@@ -34,9 +28,6 @@
             <br>
             <label>> starting month / year: </label>
             <input type="date" name="start" required> 
-            <br>
-            <label>> ending month / year: </label>
-            <input type="date" name="end" required> 
             <br>
             <input type="submit" name="submit" value="submit" required>
             `

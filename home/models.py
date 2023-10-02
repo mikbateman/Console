@@ -11,8 +11,7 @@ class Loan(models.Model):
 
 class Expense(models.Model):
     user = models.CharField(max_length=12)
-    year = models.IntegerField()
-    month = models.IntegerField()
+    yyyymm = models.IntegerField()
     income = models.DecimalField(max_digits=10, decimal_places=2)
     utilities = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     food = models.DecimalField(max_digits=8, decimal_places=2, default=0)
@@ -23,6 +22,7 @@ class Expense(models.Model):
     emis = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     something = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     balance = models.DecimalField(max_digits=10, decimal_places=2)
+    msg = models.CharField(max_length=40, default="0")
 
 
 class Investment(models.Model):

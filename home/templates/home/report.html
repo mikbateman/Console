@@ -15,11 +15,12 @@
         .a4 {
             background-color: white;
             width: 21cm;
-            height: 29cm;
+            height: 29.3cm;
             border: 2px solid black;
         }
         h1 {
             text-align: center;
+            margin:0px;
             padding: 5px;
             text-decoration: underline;
         }
@@ -107,9 +108,10 @@
                 <h2>Investments</h2>
                 <img src="{{ finv }}" height="340" widht="380">
                 {% if msg != "0" %}
-                <p><strong>Major Expenses:</strong></p>
-                <p><strong>{{ msg }}</strong></p>
+                <p style="margin:0px"><strong>Major Expenses:</strong></p>
+                <p style="margin:0px">{{ msg }}</p>
                 {% endif %}
+                <p style="margin-left:0px"><strong>Balance: {{ balance }}</strong></p>
             </div>  
 
             <div class="right" style="width:47%; height: 550px; float:left;">  
@@ -117,8 +119,8 @@
                 <img src="{{ floan }}" height="270" widht="260">
                 {% endif %}
                 {% if exp != 0 %}
-                    <img src="{{ fcat }}" height="270" widht="260">
-                    <img src="{{ fexp }}" height="270" widht="260" style="margin-top:25px">
+                    <img src="{{ fcat }}" height="250" widht="260" style="margin-top:35px">
+                    <img src="{{ fexp }}" height="270" widht="260" style="margin-top:35px">
                 {% endif %}
             </div>  
         </div>  

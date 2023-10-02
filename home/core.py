@@ -17,7 +17,7 @@ def simple(title, l1, l2):
     sizes = [l1, l2]
 
     fig, ax = plt.subplots()
-    ax.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140, colors=outer_colors, pctdistance=0.85)
+    tmp = ax.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140, colors=outer_colors, pctdistance=0.85)
 
     # Inner pie to make a donut shape
     inner_sizes = [15]
@@ -25,7 +25,10 @@ def simple(title, l1, l2):
     ax.pie(inner_sizes, colors=inner_colors, radius=0.6)
 
     inner_title = title
-    ax.text(0, 0, inner_title, ha='center', va='center', fontsize=14, fontweight='bold', color='black')
+    ax.text(0, 0, inner_title, ha='center', va='center', fontsize=17, fontweight='bold', color='black')
+
+    for text in tmp[1]:
+        text.set_fontsize(15)
 
     # To make sure pie is a circle
     ax.axis('equal')
@@ -35,23 +38,33 @@ def simple(title, l1, l2):
 
 def cat(c1, c2, c3, c4, c5, c6, c7, c8):
     labels = ["utilities", "food", "fuel", "shopping", "groceries", "subscription", "emi", "other"]
-    sizes = [c1, c2, c3, c4, c5, c6, c7, c8]
+    fig, ax = plt.subplots(figsize=(6, 3), subplot_kw=dict(aspect="equal"))
 
-    fig, ax = plt.subplots()
-    wedges, texts = ax.pie(sizes, wedgeprops=dict(width=0.5), startangle=-40)
-    ax.pie(sizes, autopct='%1.1f%%', startangle=140, pctdistance=0.85)
+    recipe = ["utilities",
+              "food",
+              "fuel",
+              "shopping",
+              "groceries",
+              "subscriptinos",
+              "emis",
+              "other",
+              ]
 
-    # Inner pie to make a donut shape
+    data = [c1, c2, c3, c4, c5, c6, c7, c8]
+
+    wedges, texts = ax.pie(data, wedgeprops=dict(width=0.5), startangle=-40)
+
     inner_sizes = [15]
     inner_colors = ["white"]
     ax.pie(inner_sizes, colors=inner_colors, radius=0.6)
 
     inner_title = "Categories"
-    ax.text(0, 0, inner_title, ha='center', va='center', fontsize=14, fontweight='bold', color='black')
+    ax.text(0, 0, inner_title, ha='center', va='center', fontsize=20, fontweight='bold', color='black')
 
-    # Different kind of annotations
+
     bbox_props = dict(boxstyle="square,pad=0.3", fc="w", ec="k", lw=0.72)
-    kw = dict(arrowprops=dict(arrowstyle="-"), bbox=bbox_props, zorder=0, va="center")
+    kw = dict(arrowprops=dict(arrowstyle="-"),
+              bbox=bbox_props, zorder=0, va="center")
 
     for i, p in enumerate(wedges):
         ang = (p.theta2 - p.theta1)/2. + p.theta1
@@ -60,7 +73,7 @@ def cat(c1, c2, c3, c4, c5, c6, c7, c8):
         horizontalalignment = {-1: "right", 1: "left"}[int(np.sign(x))]
         connectionstyle = f"angle,angleA=0,angleB={ang}"
         kw["arrowprops"].update({"connectionstyle": connectionstyle})
-        ax.annotate(labels[i], xy=(x, y), xytext=(1.35*np.sign(x), 1.4*y), horizontalalignment=horizontalalignment, **kw)
+        ax.annotate(recipe[i],fontsize=23, xy=(x, y), xytext=(1.35*np.sign(x), 1.4*y), horizontalalignment=horizontalalignment, **kw)
 
     return plt
 
